@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>Tasks</h1>
+
+		<a th:href="@{/task}">New</a>
+
+		<form th:action="@{/task/form}" th:object="${task}" method="post">
+			<input type="text" th:field="*{taskId}" disabled /> <input
+				type="text" th:field="*{name}" placeholder="Name" /> <input
+				type="text" th:field="*{enabled}" placeholder="Enabled" />
+			<button type="submit" value="Save">Save</button>
+		</form>
+
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Name</th>
+					<th scope="col">Enabled</th>
+					<th scope="col">Created</th>
+					<th scope="col">Updated</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="task : ${tasks}">
+					<td th:text="${task.taskId}"></td>
+					<td th:text="${task.name}"></td>
+					<td th:text="${task.enabled}"></td>
+					<td th:text="${task.createdAt}"></td>
+					<td th:text="${task.updatedAt}"></td>
+					<td><a th:href="@{/task/} + ${task.taskId}">Edit</a> <a
+						th:href="@{/task/delete/} + ${task.taskId}"
+						onclick="return confirm('Are you sure about that?')">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</body>
+</html>

@@ -30,6 +30,7 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long taskId;
 
+	@Column(nullable = false, length = 100, unique = true)
 	private String name;
 
 	@Column(nullable = false)
