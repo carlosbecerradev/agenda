@@ -28,7 +28,7 @@ public class Holiday {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long holidayId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String title;
 
 	@Column(nullable = false)

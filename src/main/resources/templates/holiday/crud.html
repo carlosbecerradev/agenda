@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>Holidays</h1>
+
+		<a th:href="@{/holiday}">New</a>
+
+		<form th:action="@{/holiday/form}" th:object="${holiday}"
+			method="post">
+			<input type="text" th:field="*{holidayId}" disabled /> <input
+				type="text" th:field="*{title}" placeholder="Title" /> <input
+				type="text" th:field="*{author}" placeholder="Author" /> <input
+				type="text" th:field="*{day}" placeholder="Day" /> <input
+				type="text" th:field="*{month}" placeholder="Month" />
+			<button type="submit" value="Save">Save</button>
+		</form>
+
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Title</th>
+					<th scope="col">Author</th>
+					<th scope="col">Month / Day</th>
+					<th scope="col">Created</th>
+					<th scope="col">Updated</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="holiday : ${holidays}">
+					<td th:text="${holiday.holidayId}"></td>
+					<td th:text="${holiday.title}"></td>
+					<td th:text="${holiday.author}"></td>
+					<td th:text="${holiday.month} + '/' + ${holiday.day}"></td>
+					<td th:text="${holiday.createdAt}"></td>
+					<td th:text="${holiday.updatedAt}"></td>
+					<td><a th:href="@{/holiday/} + ${holiday.holidayId}">Edit</a>
+						<a th:href="@{/holiday/delete/} + ${holiday.holidayId}"
+						onclick="return confirm('Are you sure about that?')">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</body>
+</html>
