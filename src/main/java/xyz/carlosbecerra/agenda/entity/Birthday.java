@@ -28,7 +28,7 @@ public class Birthday {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long birthdayId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	private String title;
 
 	@Column(nullable = false)

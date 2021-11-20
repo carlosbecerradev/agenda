@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>Birthdays</h1>
+
+		<a th:href="@{/birthday}">New</a>
+
+		<form th:action="@{/birthday/form}" th:object="${birthday}"
+			method="post">
+			<input type="text" th:field="*{birthdayId}" disabled /> <input
+				type="text" th:field="*{title}" placeholder="Title" /> <input
+				type="text" th:field="*{day}" placeholder="Day" /> <input
+				type="text" th:field="*{month}" placeholder="Month" /> <input
+				type="text" th:field="*{age}" placeholder="Current Age" />
+			<button type="submit" value="Save">Save</button>
+		</form>
+
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Title</th>
+					<th scope="col">Age</th>
+					<th scope="col">Month / Day</th>
+					<th scope="col">Created</th>
+					<th scope="col">Updated</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="birthday : ${birthdays}">
+					<td th:text="${birthday.birthdayId}"></td>
+					<td th:text="${birthday.title}"></td>
+					<td th:text="${birthday.age}"></td>
+					<td th:text="${birthday.month} + '/' + ${birthday.day}"></td>
+					<td th:text="${birthday.createdAt}"></td>
+					<td th:text="${birthday.updatedAt}"></td>
+					<td><a th:href="@{/birthday/} + ${birthday.birthdayId}">Edit</a>
+						<a th:href="@{/birthday/delete/} + ${birthday.birthdayId}"
+						onclick="return confirm('Are you sure about that?')">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div th:if="${bookPage.totalPages > 0}" class="pagination"
+			th:each="pageNumber : ${pageNumbers}">
+			<a th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}"
+				th:text=${pageNumber}
+				th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+		</div>
+
+	</div>
+
+</body>
+</html>
