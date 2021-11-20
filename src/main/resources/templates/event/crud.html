@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>Events</h1>
+
+		<a th:href="@{/event}">New</a>
+
+		<form th:action="@{/event/form}" th:object="${event}" method="post">
+			<input type="text" th:field="*{eventId}" disabled /> <input
+				type="text" th:field="*{title}" placeholder="Title" /> <input
+				type="text" th:field="*{author}" placeholder="Author" /> <input
+				type="datetime-local" th:field="*{startDatetime}"
+				placeholder="Start Datetime" /> <input type="datetime-local"
+				th:field="*{endDatetime}" placeholder="End Date" /> <input
+				type="text" th:field="*{enabled}" placeholder="Enabled" />
+			<button type="submit" value="Save">Save</button>
+		</form>
+
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Title</th>
+					<th scope="col">Author</th>
+					<th scope="col">Start Datetime</th>
+					<th scope="col">End Datetime</th>
+					<th scope="col">Enabled</th>
+					<th scope="col">Created</th>
+					<th scope="col">Updated</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="event : ${events}">
+					<td th:text="${event.eventId}"></td>
+					<td th:text="${event.title}"></td>
+					<td th:text="${event.author}"></td>
+					<td th:text="${event.startDatetime}"></td>
+					<td th:text="${event.endDatetime}"></td>
+					<td th:text="${event.enabled}"></td>
+					<td th:text="${event.createdAt}"></td>
+					<td th:text="${event.updatedAt}"></td>
+					<td><a th:href="@{/event/} + ${event.eventId}">Edit</a> <a
+						th:href="@{/event/delete/} + ${event.eventId}"
+						onclick="return confirm('Are you sure about that?')">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>
+</html>

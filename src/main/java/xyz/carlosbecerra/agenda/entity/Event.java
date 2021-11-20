@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,13 +33,18 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long eventId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String title;
 
 	@Column(nullable = false)
+	private String author;
+
+	@Column(nullable = false)
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime startDatetime;
 
 	@Column(nullable = false)
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime endDatetime;
 
 	@Column(nullable = false)
