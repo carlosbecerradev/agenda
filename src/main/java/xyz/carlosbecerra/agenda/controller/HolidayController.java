@@ -15,8 +15,7 @@ import lombok.AllArgsConstructor;
 import xyz.carlosbecerra.agenda.entity.Holiday;
 import xyz.carlosbecerra.agenda.service.IHolidayService;
 
-@SessionAttributes(names = {
-		"holiday", "title" })
+@SessionAttributes(names = { "holiday", "title" })
 @Controller
 @RequestMapping("/holiday")
 @AllArgsConstructor
