@@ -12,6 +12,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,13 +31,14 @@ public class Activity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long activityId;
-	
+
 	private String observation;
-	
+
 	@Column(nullable = false)
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime startDatetime;
-	
-	private Byte minutes;
+
+	private Short minutes;
 
 	@Column(nullable = false)
 	private Boolean enabled;
@@ -53,7 +57,7 @@ public class Activity {
 	protected void onUpdate() {
 		updatedAt = LocalDateTime.now();
 	}
-	
+
 	@ManyToOne
 	private Task task;
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>Activities</h1>
+
+		<a th:href="@{/activity}">New</a>
+
+		<form th:action="@{/activity/form}" th:object="${activity}"
+			method="post">
+			<input type="text" th:field="*{activityId}" disabled /> <select
+				th:field="*{task}">
+				<option th:each="item : ${tasks}" th:text="${item.name}"
+					th:value="${item.taskId}"></option>
+			</select> <input type="text" th:field="*{observation}"
+				placeholder="Observation" /> <input type="datetime-local"
+				th:field="*{startDatetime}" placeholder="Start Datetime" /> <input
+				type="number" th:field="*{minutes}" value="0" placeholder="Minutes" /><input
+				type="text" th:field="*{enabled}" placeholder="Enabled" />
+			<button type="submit" value="Save">Save</button>
+		</form>
+
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Task</th>
+					<th scope="col">Observation</th>
+					<th scope="col">Start Date Time</th>
+					<th scope="col">Minutes</th>
+					<th scope="col">Enabled</th>
+					<th scope="col">Created</th>
+					<th scope="col">Updated</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="activity : ${activities}">
+					<td th:text="${activity.activityId}"></td>
+					<td th:text="${activity.task.name}"></td>
+					<td th:text="${activity.observation}"></td>
+					<td th:text="${activity.startDatetime}"></td>
+					<td th:text="${activity.minutes}"></td>
+					<td th:text="${activity.enabled}"></td>
+					<td th:text="${activity.createdAt}"></td>
+					<td th:text="${activity.updatedAt}"></td>
+					<td><a th:href="@{/activity/} + ${activity.activityId}">Edit</a>
+						<a th:href="@{/activity/delete/} + ${activity.activityId}"
+						onclick="return confirm('Are you sure about that?')">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+
+	</div>
+
+
+</body>
+</html>
