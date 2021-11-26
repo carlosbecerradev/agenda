@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+
+	<div>
+
+		<h1>Horario</h1>
+
+		<p>Filtrar por rango de fechas:</p>
+		<div>
+			<span>Fecha Inicio</span><input type="date" /> | <span>Fecha
+				Final</span><input type="date" />
+		</div>
+
+		<div>
+			<details th:each="schedule: ${schedules}">
+				<summary>
+					<h2 th:text="${schedule.titleDate}">Noviembre 22</h2>
+				</summary>
+
+				<div>
+					<div>
+						<h3>Eventos</h3>
+					</div>
+					<div>
+						<div th:each="event : ${schedule.events}">
+							<p>
+								Titulo:<span th:text="${event.title}"></span>
+							</p>
+							<p>
+								Autor: <span th:text="${event.author}"></span>
+							</p>
+							<p>
+								F. inicio: <span th:text="${event.startDatetime}"></span>
+							</p>
+							<p>
+								F. final: <span th:text="${event.endDatetime}"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<div>
+						<h3>Cumpleaños</h3>
+					</div>
+					<div>
+						<div th:each="birthday : ${schedule.birthdays}">
+							<p>
+								Titulo: <span th:text="${birthday.title}"></span>
+							</p>
+							<p>
+								Edad: <span th:text="${birthday.age}"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<div>
+						<h3>Feriados</h3>
+					</div>
+					<div>
+						<div th:each="holiday : ${schedule.holidays}">
+							<p>
+								Titulo: <span th:text="${holiday.title}"></span>
+							</p>
+							<p>
+								Autor: <span th:text="${holiday.author}"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+			</details>
+		</div>
+
+	</div>
+
+</body>
+</html>
