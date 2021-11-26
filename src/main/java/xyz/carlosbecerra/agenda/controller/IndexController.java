@@ -5,6 +5,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +32,9 @@ public class IndexController {
 	private final IEventService eventService;
 
 	@GetMapping
-	public String index_GET(Model model, @RequestParam(name = "startDate", required = false) LocalDate startDate,
-			@RequestParam(name = "endDate", required = false) LocalDate endDate) {
+	public String index_GET(Model model,
+			@RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
+			@RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
 
 		Collection<Schedule> schedules = new ArrayList<>();
 		Collection<Event> events = new ArrayList<>();
@@ -43,25 +46,34 @@ public class IndexController {
 		}
 
 		if (endDate == null) {
-			endDate = LocalDate.now();
+			endDate = startDate;
 		}
 
 		int countDays = (int) startDate.until(endDate, ChronoUnit.DAYS);
 		LocalDate date = startDate;
 
-		for (int i = 0; i <= countDays; i++) {
+		if (countDays >= 0) {
+			for (int i = 0; i <= countDays; i++) {
 
-			events = eventService.findByStartDate(date);
-			birthdays = birthdayService.findByStartDate(date);
-			holidays = holidayService.findByStartDate(date);
+				events = eventService.findByStartDate(date);
+				birthdays = birthdayService.findByStartDate(date);
+				holidays = holidayService.findByStartDate(date);
 
-			Schedule daySchedule = new Schedule(date, "", events, birthdays, holidays);
-			schedules.add(daySchedule);
+				if (events.isEmpty() && birthdays.isEmpty() && holidays.isEmpty()) {
+					date = date.plusDays(1);
+					continue;
+				}
 
-			date = date.plusDays(1);
+				Schedule daySchedule = new Schedule(date, "", events, birthdays, holidays);
+				schedules.add(daySchedule);
+
+				date = date.plusDays(1);
+			}
 		}
 
 		model.addAttribute("title", "Agenda");
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		model.addAttribute("schedules", schedules);
 
 		return "index";

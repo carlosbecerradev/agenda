@@ -12,8 +12,12 @@
 
 		<p>Filtrar por rango de fechas:</p>
 		<div>
-			<span>Fecha Inicio</span><input type="date" /> | <span>Fecha
-				Final</span><input type="date" />
+			<form th:action="@{/}" method="get">
+				<span>Fecha Inicio</span><input type="date" th:name="startDate"
+					th:value="${startDate}" /> | <span>Fecha Final</span><input
+					type="date" th:name="endDate" th:value="${endDate}" /> <input
+					type="submit" value="Filtrar" />
+			</form>
 		</div>
 
 		<div>
