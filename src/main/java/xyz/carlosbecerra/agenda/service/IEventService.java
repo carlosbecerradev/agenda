@@ -1,5 +1,6 @@
 package xyz.carlosbecerra.agenda.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import xyz.carlosbecerra.agenda.entity.Event;
@@ -15,5 +16,7 @@ public interface IEventService {
 	void update(Event event);
 
 	void deleteById(Long eventId);
+
+	Collection<Event> findByStartDate(LocalDate startDate);
 
 }

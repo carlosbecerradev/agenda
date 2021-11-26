@@ -1,5 +1,6 @@
 package xyz.carlosbecerra.agenda.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import org.springframework.stereotype.Service;
@@ -44,6 +45,12 @@ public class HolidayServiceImpl implements IHolidayService {
 	@Transactional
 	public void deleteById(Long holidayId) {
 		holidayRepository.deleteById(holidayId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<Holiday> findByStartDate(LocalDate startDate) {
+		return holidayRepository.findByDayAndMonth((byte) startDate.getDayOfMonth(), (byte) startDate.getMonthValue());
 	}
 
 }

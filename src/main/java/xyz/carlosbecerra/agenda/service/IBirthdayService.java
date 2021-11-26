@@ -1,5 +1,6 @@
 package xyz.carlosbecerra.agenda.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import xyz.carlosbecerra.agenda.entity.Birthday;
@@ -15,5 +16,7 @@ public interface IBirthdayService {
 	void update(Birthday birthday);
 
 	void deleteById(Long birthdayId);
+
+	Collection<Birthday> findByStartDate(LocalDate startDate);
 
 }

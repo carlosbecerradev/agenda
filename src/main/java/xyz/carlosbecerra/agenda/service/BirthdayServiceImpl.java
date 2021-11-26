@@ -1,5 +1,6 @@
 package xyz.carlosbecerra.agenda.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +43,12 @@ public class BirthdayServiceImpl implements IBirthdayService {
 	@Transactional
 	public void deleteById(Long birthdayId) {
 		birthdayRepository.deleteById(birthdayId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<Birthday> findByStartDate(LocalDate startDate) {
+		return birthdayRepository.findByDayAndMonth((byte) startDate.getDayOfMonth(), (byte) startDate.getMonthValue());
 	}
 
 }

@@ -1,5 +1,6 @@
 package xyz.carlosbecerra.agenda.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import org.springframework.stereotype.Service;
@@ -43,6 +44,13 @@ public class EventServiceImpl implements IEventService {
 	@Transactional
 	public void deleteById(Long eventId) {
 		eventRepository.deleteById(eventId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<Event> findByStartDate(LocalDate startDate) {
+		return eventRepository.findBetweenStartDatetimeAndEndDatetime(startDate.atStartOfDay(),
+				startDate.atStartOfDay().plusDays(1));
 	}
 
 }
