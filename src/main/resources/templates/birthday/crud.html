@@ -16,7 +16,7 @@
 				type="text" th:field="*{title}" placeholder="Title" /> <input
 				type="text" th:field="*{day}" placeholder="Day" /> <input
 				type="text" th:field="*{month}" placeholder="Month" /> <input
-				type="text" th:field="*{age}" placeholder="Current Age" />
+				type="date" th:field="*{year}" placeholder="Year of birth" />
 			<button type="submit" value="Save">Save</button>
 		</form>
 
@@ -36,7 +36,7 @@
 				<tr th:each="birthday : ${birthdays}">
 					<td th:text="${birthday.birthdayId}"></td>
 					<td th:text="${birthday.title}"></td>
-					<td th:text="${birthday.age}"></td>
+					<td th:text="${birthday.year}"></td>
 					<td th:text="${birthday.month} + '/' + ${birthday.day}"></td>
 					<td th:text="${birthday.createdAt}"></td>
 					<td th:text="${birthday.updatedAt}"></td>

@@ -37,7 +37,7 @@ public class Birthday {
 	@Column(nullable = false)
 	private Byte month;
 
-	private Byte age;
+	private Byte year;
 
 	@Column(nullable = false)
 	private Boolean enabled;
