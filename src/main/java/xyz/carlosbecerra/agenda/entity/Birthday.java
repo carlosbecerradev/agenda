@@ -37,7 +37,8 @@ public class Birthday {
 	@Column(nullable = false)
 	private Byte month;
 
-	private Byte year;
+	@Column(nullable = true)
+	private Short year;
 
 	private LocalDateTime createdAt;
 
