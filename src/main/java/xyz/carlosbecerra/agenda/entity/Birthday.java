@@ -39,9 +39,6 @@ public class Birthday {
 
 	private Byte year;
 
-	@Column(nullable = false)
-	private Boolean enabled;
-
 	private LocalDateTime createdAt;
 
 	private LocalDateTime updatedAt;

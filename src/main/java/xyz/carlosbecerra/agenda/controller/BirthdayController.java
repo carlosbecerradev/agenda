@@ -34,7 +34,6 @@ public class BirthdayController {
 
 	@PostMapping("/form")
 	public String save_POST(Birthday birthday, SessionStatus status) {
-		birthday.setEnabled(true);
 		iBirthdayService.insert(birthday);
 		status.setComplete();
 		System.out.println("Saved");
