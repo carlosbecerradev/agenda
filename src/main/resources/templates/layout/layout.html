@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${title}">Insert title here</title>
+</head>
+
+<body>
+
+	<headere th:fragment="header">
+		<a th:href="@{/}">Horario</a> ||
+		<a th:href="@{/event}">Events</a> |
+		<a th:href="@{/birthday}">Birthdays</a> |
+		<a th:href="@{/holiday}">Holidays</a> |
+		<a th:href="@{/activity}">Activities</a> |
+		<a th:href="@{/task}">Tasks</a>
+	</headere>
+
+</body>
+
+</html>
