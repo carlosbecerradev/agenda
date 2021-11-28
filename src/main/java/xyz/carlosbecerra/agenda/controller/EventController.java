@@ -34,8 +34,6 @@ public class EventController {
 
 	@PostMapping("/form")
 	public String save_POST(Event event, SessionStatus status) {
-
-		event.setEnabled(true);
 		System.out.println("INFO: " + event.toString());
 
 		eventService.insert(event);

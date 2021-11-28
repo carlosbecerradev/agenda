@@ -34,7 +34,6 @@ public class TaskController {
 
 	@PostMapping("/form")
 	public String save_POST(Task task, SessionStatus status) {
-		task.setEnabled(true);
 		taskService.insert(task);
 		status.setComplete();
 		System.out.println("Saved");

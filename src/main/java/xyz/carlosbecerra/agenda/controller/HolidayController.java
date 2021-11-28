@@ -34,7 +34,6 @@ public class HolidayController {
 
 	@PostMapping("/form")
 	public String save_POST(Holiday holiday, SessionStatus status) {
-		holiday.setEnabled(true);
 		holidayService.insert(holiday);
 		status.setComplete();
 		System.out.println("Saved");
