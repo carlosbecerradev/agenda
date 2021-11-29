@@ -1,93 +1,143 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="layout/layout :: head">
-<meta charset="UTF-8">
-<title th:text="${title}">Insert title here</title>
-</head >
+	<meta charset="UTF-8">
+	<title th:text="${title}">Insert title here</title>
+</head>
+
 <body>
 
-	<header th:replace="layout/layout :: header"></header >
+	<header th:replace="layout/layout :: header"></header>
 
-	<div>
+	<div class="container">
 
-		<h1>Horario</h1>
+		<h1 class="mt-5">HORARIO</h1>
 
-		<p>Filtrar por rango de fechas:</p>
-		<div>
+		<div class="my-5">
 			<form th:action="@{/}" method="get">
-				<span>Fecha Inicio</span><input type="date" th:name="startDate"
-					th:value="${startDate}" /> | <span>Fecha Final</span><input
-					type="date" th:name="endDate" th:value="${endDate}" /> <input
-					type="submit" value="Filtrar" />
+				<div class="card border-dark p-4">
+					<fieldset>
+						<legend class="text-secondary">Filter by date range</legend>
+
+						<div class="row">
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="fechaInicioIndex">Fecha
+									Inicio</label>
+								<input class="form-control" id="fechaInicioIndex" type="date" th:name="startDate"
+									th:value="${startDate}">
+							</div>
+
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="fechaFinalIndex">Fecha
+									Final</label>
+								<input class="form-control" id="fechaFinalIndex" type="date" th:name="endDate"
+									th:value="${endDate}">
+							</div>
+						</div>
+
+						<div class="mt-4">
+							<button type="submit" class="btn btn-outline-secondary">Submit</button>
+						</div>
+					</fieldset>
+
+				</div>
 			</form>
 		</div>
 
-		<div>
-			<details th:each="schedule: ${schedules}">
-				<summary>
-					<h2 th:text="${schedule.titleDate}">Noviembre 22</h2>
-				</summary>
 
-				<div>
-					<div>
-						<h3>Eventos</h3>
-					</div>
-					<div>
-						<div th:each="event : ${schedule.events}">
-							<p>
-								Titulo:<span th:text="${event.title}"></span>
-							</p>
-							<p>
-								Autor: <span th:text="${event.author}"></span>
-							</p>
-							<p>
-								F. inicio: <span th:text="${event.startDatetime}"></span>
-							</p>
-							<p>
-								F. final: <span th:text="${event.endDatetime}"></span>
-							</p>
+		<div class="accordion">
+			<details class="accordion-item mb-4 card border-dark" th:each="schedule: ${schedules}">
+				<summary class="accordion-header p-4 lead" th:text="${schedule.titleDate}"></summary>
+
+				<div class="accordion-body">
+
+					<div th:if="${not #lists.isEmpty(schedule.events)}" class="card card border-dark mb-3">
+						<h3 class="card-header">Events</h3>
+						<div class="card-body">
+							<div th:each="event : ${schedule.events}">
+
+								<div class="card border-secondary mb-3">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-12 col-md-6">
+												<span class="badge bg-secondary">Title</span>
+												<span th:text="${event.title}"></span>
+											</div>
+											<div class="col-12 col-md-6">
+												<span class="badge bg-secondary">Autor</span>
+												<span th:text="${event.author}"></span>
+											</div>
+											<div class="col-12 col-md-6">
+												<span class="badge bg-secondary">Start Date Time</span>
+												<span th:text="${event.startDatetime}"></span>
+											</div>
+											<div class="col-12 col-md-6">
+												<span class="badge bg-secondary">End Date Time </span>
+												<span th:text="${event.endDatetime}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div>
-					<div>
-						<h3>Cumpleaños</h3>
-					</div>
-					<div>
-						<div th:each="birthday : ${schedule.birthdays}">
-							<p>
-								Titulo: <span th:text="${birthday.title}"></span>
-							</p>
-							<p>
-								Edad: <span th:text="${birthday.year}"></span>
-							</p>
+					<div th:if="${not #lists.isEmpty(schedule.birthdays)}" class="card border-dark mb-3">
+						<h3 class="card-header">Birthdays</h3>
+						<div class="card-body">
+							<div th:each="birthday : ${schedule.birthdays}">
+
+								<div class="card border-info mb-3">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-12 col-md-6">
+												<span class="badge bg-info">Title</span>
+												<span th:text="${birthday.title}"></span>
+											</div>
+											<div class="col-12 col-md-6">
+												<span class="badge bg-info">Age</span>
+												<span th:text="${birthday.year}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div>
-					<div>
-						<h3>Feriados</h3>
-					</div>
-					<div>
-						<div th:each="holiday : ${schedule.holidays}">
-							<p>
-								Titulo: <span th:text="${holiday.title}"></span>
-							</p>
-							<p>
-								Autor: <span th:text="${holiday.author}"></span>
-							</p>
+					<div th:if="${not #lists.isEmpty(schedule.holidays)}" class="card border-dark mb-3">
+						<h3 class="card-header">Holidays</h3>
+						<div class="card-body">
+							<div th:each="holiday : ${schedule.holidays}">
+
+								<div class="card border-warning mb-3">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-12 col-md-6">
+												<span class="badge bg-warning">Title</span>
+												<span th:text="${holiday.title}"></span>
+											</div>
+											<div class="col-12 col-md-6">
+												<span class="badge bg-warning">Author</span>
+												<span th:text="${holiday.author}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
+
 				</div>
+
 
 			</details>
+
 		</div>
 
-	</div>
-	
-	<div th:replace="layout/layout :: scripts"></div >
+		<div th:replace="layout/layout :: scripts"></div>
 
 </body>
+
 </html>
