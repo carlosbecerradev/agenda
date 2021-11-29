@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout/layout :: head">
 <meta charset="UTF-8">
 <title th:text="${title}">Insert title here</title>
-</head>
+</head >
 <body>
 
 	<header th:replace="layout/layout :: header"></header >
