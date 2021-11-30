@@ -1,63 +1,116 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="layout/layout :: head">
-<meta charset="UTF-8">
-<title th:text="${title}">Insert title here</title>
+	<meta charset="UTF-8">
+	<title th:text="${title}">Insert title here</title>
 </head>
+
 <body>
 
-	<header th:replace="layout/layout :: header"></header >
-	
-	<div>
-		<h1>Events</h1>
+	<header th:replace="layout/layout :: header"></header>
 
-		<a th:href="@{/event}">New</a>
+	<div class="container">
+		<h1 class="mt-5">Manage Events</h1>
 
-		<form th:action="@{/event/form}" th:object="${event}" method="post">
-			<input type="text" th:field="*{eventId}" disabled /> <input
-				type="text" th:field="*{title}" placeholder="Title" /> <input
-				type="text" th:field="*{author}" placeholder="Author" /> <input
-				type="datetime-local" th:field="*{startDatetime}"
-				placeholder="Start Datetime" /> <input type="datetime-local"
-				th:field="*{endDatetime}" placeholder="End Date" /> <input
-				type="text" th:field="*{enabled}" placeholder="Enabled" />
-			<button type="submit" value="Save">Save</button>
-		</form>
+		<details class="my-4 card border-dark" open>
+			<summary class="px-4 py-2 lead text-secondary">Formulario</summary>
 
-		<table>
-			<thead>
-				<tr>
-					<th scope="col">Id</th>
-					<th scope="col">Title</th>
-					<th scope="col">Author</th>
-					<th scope="col">Start Datetime</th>
-					<th scope="col">End Datetime</th>
-					<th scope="col">Enabled</th>
-					<th scope="col">Created</th>
-					<th scope="col">Updated</th>
-					<th scope="col">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="event : ${events}">
-					<td th:text="${event.eventId}"></td>
-					<td th:text="${event.title}"></td>
-					<td th:text="${event.author}"></td>
-					<td th:text="${event.startDatetime}"></td>
-					<td th:text="${event.endDatetime}"></td>
-					<td th:text="${event.enabled}"></td>
-					<td th:text="${event.createdAt}"></td>
-					<td th:text="${event.updatedAt}"></td>
-					<td><a th:href="@{/event/} + ${event.eventId}">Edit</a> <a
-						th:href="@{/event/delete/} + ${event.eventId}"
-						onclick="return confirm('Are you sure about that?')">Delete</a></td>
-				</tr>
-			</tbody>
-		</table>
+			<div class="p-4">
+				<form th:action="@{/event/form}" th:object="${event}" method="post">
+
+					<fieldset>
+						<div class="row">
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="EventIdCrud">Id</label>
+								<input class="form-control" id="EventIdCrud" type="text" th:field="*{eventId}" disabled>
+							</div>
+
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="EventTitleCrud">Title</label>
+								<input class="form-control" id="EventTitleCrud" type="text" th:field="*{title}"
+									placeholder="Title" required>
+							</div>
+
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="EventAuthorCrud">Author</label>
+								<input class="form-control" id="EventAuthorCrud" type="text" th:field="*{author}"
+									placeholder="Author" required>
+							</div>
+
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="EventStartDateTimeCrud">Start Date Time</label>
+								<input class="form-control" id="EventStartDateTimeCrud" type="datetime-local"
+									th:field="*{startDatetime}" placeholder="Start Datetime" required>
+							</div>
+
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="EventEndDateTimeCrud">End Date Time</label>
+								<input class="form-control" id="EventEndDateTimeCrud" type="datetime-local"
+									th:field="*{endDatetime}" placeholder="End Date" required>
+							</div>
+
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="EventEnabledCrud">Enabled</label>
+								<select class="form-select form-select" id="EventEnabledCrud" th:field="*{enabled}"
+									required>
+									<option selected value="1">Yes</option>
+									<option value="0">No</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mt-4">
+							<button type="submit" class="btn btn-outline-secondary me-4">Save</button>
+							<a class="btn btn-outline-light me-4" th:href="@{/event}">New</a>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+
+		</details>
+
+		<p class="lead mt-5">List Of Events</p>
+		<div class="card border-primary table-responsive p-4 mb-5">
+			<table class="table table-hover table-striped mb-0">
+				<thead class="my-2">
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Title</th>
+						<th scope="col">Author</th>
+						<th scope="col">Start Date Time</th>
+						<th scope="col">End Date Time</th>
+						<th scope="col">Enabled</th>
+						<th scope="col">Created At</th>
+						<th scope="col">Updated At</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="mb-1" th:each="event : ${events}">
+						<td th:text="${event.eventId}"></td>
+						<td th:text="${event.title}"></td>
+						<td th:text="${event.author}"></td>
+						<td th:text="${event.startDatetime}"></td>
+						<td th:text="${event.endDatetime}"></td>
+						<td th:text="${event.enabled}"></td>
+						<td th:text="${event.createdAt}"></td>
+						<td th:text="${event.updatedAt}"></td>
+						<td>
+							<div><a class="btn-link" th:href="@{/event/} + ${event.eventId}">Edit</a></div>
+							<div><a class="text-secondary" th:href="@{/event/delete/} + ${event.eventId}"
+									onclick="return confirm('Are you sure about that?')">Delete</a></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
 
 	</div>
-	
-	<div th:replace="layout/layout :: scripts"></div >
-	
+
+	<div th:replace="layout/layout :: scripts"></div>
+
 </body>
+
 </html>
