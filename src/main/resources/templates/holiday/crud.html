@@ -1,59 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="layout/layout :: head">
-<meta charset="UTF-8">
-<title th:text="${title}">Insert title here</title>
+	<meta charset="UTF-8">
+	<title th:text="${title}">Insert title here</title>
 </head>
+
 <body>
 
-	<header th:replace="layout/layout :: header"></header >
-	
-	<div>
-		<h1>Holidays</h1>
+	<header th:replace="layout/layout :: header"></header>
 
-		<a th:href="@{/holiday}">New</a>
+	<div class="container">
+		<h1 class="mt-5">Manage Holidays</h1>
 
-		<form th:action="@{/holiday/form}" th:object="${holiday}"
-			method="post">
-			<input type="text" th:field="*{holidayId}" disabled /> <input
-				type="text" th:field="*{title}" placeholder="Title" /> <input
-				type="text" th:field="*{author}" placeholder="Author" /> <input
-				type="text" th:field="*{day}" placeholder="Day" /> <input
-				type="text" th:field="*{month}" placeholder="Month" /> <input
-				type="text" th:field="*{enabled}" placeholder="Enabled" />
-			<button type="submit" value="Save">Save</button>
-		</form>
+		<details class="my-4 card border-dark" open>
+			<summary class="px-4 py-2 lead text-secondary">Formulario</summary>
 
-		<table>
-			<thead>
-				<tr>
+			<div class="p-4">
+				<form th:action="@{/holiday/form}" th:object="${holiday}" method="post">
+
+					<fieldset>
+						<div class="row">
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="HolidayIdCrud">Id</label>
+								<input class="form-control" id="HolidayIdCrud" type="text" th:field="*{holidayId}"
+									disabled>
+							</div>
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="HolidayTitleCrud">Title</label>
+								<input class="form-control" id="HolidayTitleCrud" type="text" th:field="*{title}"
+									placeholder="Title" required>
+							</div>
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="HolidayAuthorCrud">Author</label>
+								<input class="form-control" id="HolidayAuthorCrud" type="text" th:field="*{author}"
+									placeholder="Author" required>
+							</div>
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="HolidayDayCrud">Day</label>
+								<select class="form-select form-select" id="HolidayDayCrud" th:field="*{day}" required>
+									<option th:each="num : ${#numbers.sequence(1, 31)}" selected th:value="${num}"
+										th:text="${num}">Yes</option>
+								</select>
+							</div>
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="HolidayMonthCrud">Month</label>
+								<select class="form-select form-select" id="HolidayMonthCrud" th:field="*{month}"
+									required>
+									<option selected value="1">January</option>
+									<option value="2">February</option>
+									<option value="3">March</option>
+									<option value="4">April</option>
+									<option value="5">May</option>
+									<option value="6">June</option>
+									<option value="7">July</option>
+									<option value="8">August</option>
+									<option value="9">September</option>
+									<option value="10">October</option>
+									<option value="11">November</option>
+									<option value="12">December</option>
+								</select>
+							</div>
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="HolidayEnabledCrud">Enabled</label>
+								<select class="form-select form-select" id="HolidayEnabledCrud" th:field="*{enabled}"
+									required>
+									<option selected value="1">Yes</option>
+									<option value="0">No</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mt-4">
+							<button type="submit" class="btn btn-outline-secondary me-4">Save</button>
+							<a class="btn btn-outline-light me-4" th:href="@{/holiday}">New</a>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+		</details>
+
+		<p class="lead mt-5">List Of Holidays</p>
+		<div class="card border-primary table-responsive p-4 mb-5">
+			<table class="table table-hover table-striped mb-0">
+				<thead class="my-2">
 					<th scope="col">Id</th>
 					<th scope="col">Title</th>
 					<th scope="col">Author</th>
-					<th scope="col">Month / Day</th>
+					<th scope="col">Date</th>
 					<th scope="col">Created</th>
 					<th scope="col">Updated</th>
 					<th scope="col">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="holiday : ${holidays}">
-					<td th:text="${holiday.holidayId}"></td>
-					<td th:text="${holiday.title}"></td>
-					<td th:text="${holiday.author}"></td>
-					<td th:text="${holiday.month} + '/' + ${holiday.day}"></td>
-					<td th:text="${holiday.createdAt}"></td>
-					<td th:text="${holiday.updatedAt}"></td>
-					<td><a th:href="@{/holiday/} + ${holiday.holidayId}">Edit</a>
-						<a th:href="@{/holiday/delete/} + ${holiday.holidayId}"
-						onclick="return confirm('Are you sure about that?')">Delete</a></td>
-				</tr>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<tr th:each="holiday : ${holidays}">
+						<td th:text="${holiday.holidayId}"></td>
+						<td th:text="${holiday.title}"></td>
+						<td th:text="${holiday.author}"></td>
+						<td th:text="${holiday.month} + ' ' + ${holiday.day}"></td>
+						<td th:text="${holiday.createdAt}"></td>
+						<td th:text="${holiday.updatedAt}"></td>
+						<td>
+							<div><a class="btn-link" th:href="@{/holiday/} + ${holiday.holidayId}">Edit</a></div>
+							<div><a class="text-secondary" th:href="@{/holiday/delete/} + ${holiday.holidayId}"
+									onclick="return confirm('Are you sure about that?')">Delete</a></div>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 	</div>
-	
-	<div th:replace="layout/layout :: scripts"></div >
+
+	<div th:replace="layout/layout :: scripts"></div>
 
 </body>
+
 </html>
