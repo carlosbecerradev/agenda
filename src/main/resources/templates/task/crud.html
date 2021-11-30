@@ -1,53 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="layout/layout :: head">
-<meta charset="UTF-8">
-<title th:text="${title}">Insert title here</title>
+	<meta charset="UTF-8">
+	<title th:text="${title}">Insert title here</title>
 </head>
+
 <body>
 
-	<header th:replace="layout/layout :: header"></header >
-	
-	<div>
-		<h1>Tasks</h1>
+	<header th:replace="layout/layout :: header"></header>
 
-		<a th:href="@{/task}">New</a>
+	<div class="container">
+		<h1 class="mt-5">Manage Tasks</h1>
 
-		<form th:action="@{/task/form}" th:object="${task}" method="post">
-			<input type="text" th:field="*{taskId}" disabled /> <input
-				type="text" th:field="*{name}" placeholder="Name" /> <input
-				type="text" th:field="*{enabled}" placeholder="Enabled" />
-			<button type="submit" value="Save">Save</button>
-		</form>
+		<details class="my-4 card border-dark" open>
+			<summary class="px-4 py-2 lead text-secondary">Form</summary>
 
-		<table>
-			<thead>
-				<tr>
+			<div class="p-4 pt-0">
+				<form th:action="@{/task/form}" th:object="${task}" method="post">
+
+					<fieldset>
+						<div class="row">
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="TaskIdCrud">Id</label>
+								<input class="form-control" id="EventIdCrud" type="text" th:field="*{taskId}" disabled>
+							</div>
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="TaskNameCrud">Name</label>
+								<input class="form-control" id="TaskNameCrud" type="text" th:field="*{name}" required>
+							</div>
+							<div class="form-group mt-4 col-12 col-md-6 col-lg-4">
+								<label class="form-label" for="TaskEnabledCrud">Enabled</label>
+								<select class="form-select form-select" id="TaskEnabledCrud" th:field="*{enabled}"
+									required>
+									<option selected value="1">Yes</option>
+									<option value="0">No</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="mt-4">
+							<button type="submit" class="btn btn-outline-secondary me-4">Save</button>
+							<a class="btn btn-outline-light me-4" th:href="@{/task}">New</a>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+		</details>
+
+		<p class="lead mt-5">List Of Tasks</p>
+		<div class="card border-dark table-responsive p-4 mb-5">
+			<table class="table table-hover table-striped mb-0">
+				<thead class="my-2">
 					<th scope="col">Id</th>
 					<th scope="col">Name</th>
 					<th scope="col">Enabled</th>
 					<th scope="col">Created</th>
 					<th scope="col">Updated</th>
 					<th scope="col">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="task : ${tasks}">
-					<td th:text="${task.taskId}"></td>
-					<td th:text="${task.name}"></td>
-					<td th:text="${task.enabled}"></td>
-					<td th:text="${task.createdAt}"></td>
-					<td th:text="${task.updatedAt}"></td>
-					<td><a th:href="@{/task/} + ${task.taskId}">Edit</a> <a
-						th:href="@{/task/delete/} + ${task.taskId}"
-						onclick="return confirm('Are you sure about that?')">Delete</a></td>
-				</tr>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<tr th:each="task : ${tasks}">
+						<td th:text="${task.taskId}"></td>
+						<td th:text="${task.name}"></td>
+						<td th:text="${task.enabled}"></td>
+						<td th:text="${task.createdAt}"></td>
+						<td th:text="${task.updatedAt}"></td>
+						<td>
+							<div><a class="btn-link" th:href="@{/task/} + ${task.taskId}">Edit</a></div>
+							<div><a class="text-secondary" th:href="@{/task/delete/} + ${task.taskId}"
+									onclick="return confirm('Are you sure about that?')">Delete</a></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 	</div>
-	
-	<div th:replace="layout/layout :: scripts"></div >
+
+	<div th:replace="layout/layout :: scripts"></div>
 
 </body>
+
 </html>
